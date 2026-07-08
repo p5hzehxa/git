@@ -3,14 +3,15 @@
 #include "odb/transaction.h"
 
 int odb_transaction_begin(struct object_database *odb,
-			  struct odb_transaction **out)
+			  struct odb_transaction **out,
+			  enum odb_transaction_flags flags)
 {
 	int ret;
 
 	if (odb->transaction)
 		return -1;
 
-	ret = odb_source_begin_transaction(odb->sources, out);
+	ret = odb_source_begin_transaction(odb->sources, out, flags);
 	odb->transaction = *out;
 
 	return ret;
